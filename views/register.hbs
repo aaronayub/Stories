@@ -1,0 +1,29 @@
+{{>header}}
+
+<div class="container">
+    <div class="section">
+        <form method="post">
+            <div class="input-field">
+                <label for="name">Username: </label>
+                <input placeholder="Username" name="username" id="name" type="text" required>
+            </div>
+            <div class="input-field">
+                <label for="pass">Password: </label>
+                <input placeholder="Password" name="password" id="pass" type="password" required>
+            </div>
+            <div class="input-field">
+                <label for="confirm">Confirm Password: </label>
+                <input placeholder="Confirm Password" name="confirm" id="confirm" type="password" required>
+            </div>
+            <div class="input-field">
+                <label for="email">Email Address (Optional): </label>
+                <input placeholder="Email Address (Optional)" name="email" id="email" type="email">
+            </div>
+            <button type="submit" class="btn light-green" name="register">Register</button>
+        </form>
+    </div>
+    <div class="divider"></div>
+    <div class="section">
+        Already have an account? <a href="login">Log In to the site here.</a>
+    </div>
+</div>
