@@ -1,11 +1,11 @@
 <nav class="light-green" role="navigation">
     <div class="nav-wrapper container">
-        <a href="/homepage" class="brand-logo left">Stories App</a>
+        <a href="/" class="brand-logo left">Stories App</a>
         <ul class="right">
             {{#if username}}
-
+                <li><a href="logout">Logout</a></li>
             {{else}}
-                <li><a href="login" class="">Login / Register</a></li>
+                <li><a href="login">Login / Register</a></li>
             {{/if}}
         </ul>
     </div>

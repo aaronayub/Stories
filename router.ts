@@ -14,9 +14,10 @@ declare module 'express-session' {
 router.use(session({secret: "StoriesApp session secret",saveUninitialized: false, resave: false}))
 router.use(express.urlencoded({extended:false}))
 
-router.get('/login',(req,res,next)=>{
+router.get('/login',(req,res)=>{
     if (req.session.username) {
-        next()
+        res.redirect('/')
+        return
     }
     res.render('login',{
         username: req.session.username,
@@ -25,14 +26,37 @@ router.get('/login',(req,res,next)=>{
 })
 router.get('/register',(req,res,next)=>{
     if (req.session.username) {
-        next()
+        res.redirect('/')
+        return
     }
     res.render('register',{
         username: req.session.username,
         title: "Register"
     })
 })
-router.post('/register',async(req,res,next)=>{
+router.get('/logout',(req,res)=>{
+    delete req.session.username
+    res.redirect('/')
+})
+router.post('/login',async(req,res)=>{
+    var compare = null
+    await con.promise().query('SELECT pass FROM users WHERE username = ?',
+    [req.body.username]).then(([rows,fields])=>{
+        if (rows[0]) {
+            compare = rows[0].pass
+        }
+    })
+    if (compare) {
+        const matches = await bcrypt.compare(req.body.password,compare)
+        if (matches) {
+            req.session.username = req.body.username
+            res.redirect('/')
+            return
+        }
+    }
+    res.redirect('/login')
+})
+router.post('/register',async(req,res)=>{
     var valid = true // User is eligible for registering
     if (req.body.password.length < 6) valid = false // If the password isn't of the required length
     else if (req.body.confirm !== req.body.password) valid = false // If the password and confirmed password don't match
@@ -46,7 +70,7 @@ router.post('/register',async(req,res,next)=>{
             [req.body.username,hash,'user'], (err,result)=>{
                 if (err) console.log(err)
                 req.session.username = con.escape(req.body.username)
-                next()
+                res.redirect('/')
             })
         })
     }
@@ -54,7 +78,7 @@ router.post('/register',async(req,res,next)=>{
         res.redirect('/register')
     }
 })
-router.all('*',(req,res) => {
+router.all('/',(req,res) => {
     res.render('homepage',{
         username: req.session.username,
         title: "Stories App"
