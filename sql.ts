@@ -1,4 +1,4 @@
-import mysql from 'mysql'
+import mysql from 'mysql2'
 
 // Edit these parameters to authenticate to your own server if you are hosting this locally
 var con = mysql.createConnection({

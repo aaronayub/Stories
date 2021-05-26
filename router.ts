@@ -2,7 +2,6 @@ import express from 'express'
 import session from 'express-session'
 import bcrypt from 'bcrypt'
 import con from './sql'
-import { nextTick } from 'process'
 var router = express.Router()
 
 // Express-session variables must be declaration merged with typescript
@@ -33,17 +32,13 @@ router.get('/register',(req,res,next)=>{
         title: "Register"
     })
 })
-router.post('/register',(req,res,next)=>{
+router.post('/register',async(req,res,next)=>{
     var valid = true // User is eligible for registering
     if (req.body.password.length < 6) valid = false // If the password isn't of the required length
     else if (req.body.confirm !== req.body.password) valid = false // If the password and confirmed password don't match
-    con.query('SELECT username FROM users WHERE username = ?',
-    [req.body.username], (err,result)=>{
-        console.log(result)
-        console.log(con.escape(req.body.username))
-        if (result.length > 0) { // If the query returns a row, then the username is already taken
-            valid = false
-        }
+    await con.promise().query('SELECT username FROM users WHERE username = ?',
+    [req.body.username]).then(([rows,fields]) => {
+        if (rows[0]) valid = false
     })
     if (valid) {
         bcrypt.hash(req.body.password,10,(err,hash)=>{
@@ -54,6 +49,9 @@ router.post('/register',(req,res,next)=>{
                 next()
             })
         })
+    }
+    else {
+        res.redirect('/register')
     }
 })
 router.all('*',(req,res) => {
