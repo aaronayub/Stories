@@ -15,7 +15,7 @@ CREATE TABLE users (
 /* All written stories.
 Users may omit adding a short description, but can't submit blank stories. */
 CREATE TABLE stories (
-    id VARCHAR(128) NOT NULL PRIMARY KEY,
+    id INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
     title VARCHAR(64) NOT NULL,
     brief VARCHAR(512),
     story LONGTEXT NOT NULL,
@@ -27,7 +27,7 @@ CREATE TABLE stories (
 
 /* All ratings for a given story, by a given user*/
 CREATE TABLE ratings (
-    id VARCHAR(128) NOT NULL,
+    id INT UNSIGNED AUTO_INCREMENT NOT NULL,
     username VARCHAR(64) NOT NULL,
     PRIMARY KEY (id, username),
     FOREIGN KEY (username) REFERENCES users (username)
