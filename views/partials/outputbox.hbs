@@ -1,0 +1,12 @@
+{{! An output box which displays feedback to the user after an operation.
+The output box is not shown unless there is feedback to display.
+If the output's type is a success, the output box will be green, otherwise it will be red.}}
+{{#if output}}
+    {{#if success}}
+        <div id="outputbox" class="light-green lighten-1">
+    {{else}}
+        <div id="outputbox" class="red lighten-4">
+    {{/if}}
+    {{output}}
+    </div>
+{{/if}}

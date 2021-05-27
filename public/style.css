@@ -1,0 +1,7 @@
+/* A box displaying feedback to the user*/
+#outputbox {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding:0.5rem;
+    border-radius:1rem;
+}
