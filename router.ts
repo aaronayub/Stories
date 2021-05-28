@@ -1,6 +1,7 @@
 import express from 'express'
 import session from 'express-session'
 import bcrypt from 'bcrypt'
+import crypto from 'crypto'
 import con from './sql'
 var router = express.Router()
 
@@ -29,6 +30,17 @@ router.get('/login',(req,res)=>{
     })
     delete req.session.output
 })
+router.get('/stories',(req,res)=>{
+    if (!req.session.username) {
+        res.redirect('/')
+        return
+    }
+    res.render('stories',{
+        title: "Your Stories",
+        username: req.session.username,
+        output: req.session.output
+    })
+})
 router.get('/register',(req,res,next)=>{
     if (req.session.username) {
         res.redirect('/')
@@ -53,13 +65,21 @@ router.post('/login',async(req,res)=>{
             compare = rows[0].pass
         }
     })
+    var matches = false
     if (compare) {
-        const matches = await bcrypt.compare(req.body.password,compare)
-        if (matches) {
-            req.session.username = req.body.username
-            res.redirect('/')
-            return
+        matches = await bcrypt.compare(req.body.password,compare)
+    }
+    if (matches) { // Credentials match, so the user logs in
+        req.session.username = req.body.username
+
+        if (req.body.remember) { // If the user wants to be remembered across sessions
+            var token = crypto.randomBytes(64).toString('hex')
+            con.query('INSERT INTO logins (token,username) VALUES (?,?)',
+            [token,req.body.username])
         }
+
+        res.redirect('/')
+        return
     }
     // If this section is reached, then the user did not enter valid credentials.
     req.session.output = "Invalid username or password."

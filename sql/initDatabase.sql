@@ -20,6 +20,7 @@ CREATE TABLE stories (
     brief VARCHAR(512),
     story LONGTEXT NOT NULL,
     username VARCHAR(64) NOT NULL,
+    rating DECIMAL(3,2) DEFAULT 0.00,
     FOREIGN KEY (username) REFERENCES users (username)
         ON DELETE CASCADE
         ON UPDATE CASCADE
@@ -29,11 +30,22 @@ CREATE TABLE stories (
 CREATE TABLE ratings (
     id INT UNSIGNED AUTO_INCREMENT NOT NULL,
     username VARCHAR(64) NOT NULL,
+    rating TINYINT NOT NULL,
     PRIMARY KEY (id, username),
     FOREIGN KEY (username) REFERENCES users (username)
         ON DELETE CASCADE
         ON UPDATE CASCADE,
     FOREIGN KEY (id) REFERENCES stories (id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+/* Login tokens for persistent sessions */
+CREATE TABLE logins (
+    token VARCHAR(128) NOT NULL PRIMARY KEY,
+    username VARCHAR(64) NOT NULL,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (username) REFERENCES users (username)
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
