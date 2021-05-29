@@ -3,6 +3,7 @@ import session from 'express-session'
 import bcrypt from 'bcrypt'
 import crypto from 'crypto'
 import con from './sql'
+import cookieParser from 'cookie-parser'
 var router = express.Router()
 
 // Express-session variables must be declaration merged with typescript
@@ -17,6 +18,24 @@ declare module 'express-session' {
 router.use(express.static('public'))
 router.use(session({secret: "StoriesApp session secret",saveUninitialized: false, resave: false}))
 router.use(express.urlencoded({extended:false}))
+router.use(cookieParser())
+
+// Automatically log the user in if they have a valid authentication token
+router.use(async (req,res,next)=>{
+    if (!req.session.username && req.cookies.token) {
+        await con.promise().query('SELECT username FROM logins WHERE token = ?',
+        [req.cookies.token]).then(([rows,fields])=>{
+            if (rows[0]) { // If this is a valid token, then log the user in
+                req.session.username = rows[0].username
+            }
+            else { // Otherwise, erase the token from the user's cookies
+                res.clearCookie('token')
+            }
+        })
+    }
+    next()
+})
+
 
 router.get('/login',(req,res)=>{
     if (req.session.username) {
@@ -55,6 +74,11 @@ router.get('/register',(req,res,next)=>{
 })
 router.get('/logout',(req,res)=>{
     delete req.session.username
+    if (req.cookies.token) {
+        res.clearCookie('token')
+        con.query('DELETE FROM logins WHERE token = ?',[req.cookies.token])
+    }
+
     res.redirect('/')
 })
 router.post('/login',async(req,res)=>{
@@ -76,8 +100,11 @@ router.post('/login',async(req,res)=>{
             var token = crypto.randomBytes(64).toString('hex')
             con.query('INSERT INTO logins (token,username) VALUES (?,?)',
             [token,req.body.username])
-        }
 
+            var expiry = new Date()
+            expiry.setDate(expiry.getDate() + 14)
+            res.cookie('token',token,{expires: expiry})
+        }
         res.redirect('/')
         return
     }
