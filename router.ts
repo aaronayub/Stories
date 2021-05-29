@@ -49,6 +49,40 @@ router.get('/login',(req,res)=>{
     })
     delete req.session.output
 })
+router.get('/new',(req,res)=>{
+    if (!req.session.username) {
+        res.redirect('/')
+        return
+    }
+    res.render('new',{
+        title: "Add New Story",
+        username: req.session.username
+    })
+})
+router.post('/new',async (req,res)=>{
+    if (!req.session.username) {
+        req.session.output = "You must be logged in to submit a story."
+        res.redirect('/')
+        return
+    }
+    else if (!req.body.title) {
+        req.session.output = "Your story must have a title."
+        res.redirect('/new')
+        return
+    }
+    else if (!req.body.content) {
+        req.session.output = "You can't upload a blank story."
+        res.redirect('/new')
+        return
+    }
+    else {
+        await con.promise().query("INSERT INTO stories (title, brief, content, username) VALUES (?,?,?,?)",
+        [req.body.title,req.body.brief,req.body.content,req.session.username])
+        req.session.output = "Story uploaded!"
+        req.session.success = true
+        res.redirect('/stories')
+    }
+})
 router.get('/stories',(req,res)=>{
     if (!req.session.username) {
         res.redirect('/')
@@ -57,8 +91,11 @@ router.get('/stories',(req,res)=>{
     res.render('stories',{
         title: "Your Stories",
         username: req.session.username,
-        output: req.session.output
+        output: req.session.output,
+        success: req.session.success
     })
+    delete req.session.output
+    delete req.session.success
 })
 router.get('/register',(req,res,next)=>{
     if (req.session.username) {

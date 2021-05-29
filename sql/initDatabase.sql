@@ -18,7 +18,7 @@ CREATE TABLE stories (
     id INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
     title VARCHAR(64) NOT NULL,
     brief VARCHAR(512),
-    story LONGTEXT NOT NULL,
+    content LONGTEXT NOT NULL,
     username VARCHAR(64) NOT NULL,
     rating DECIMAL(3,2) DEFAULT 0.00,
     FOREIGN KEY (username) REFERENCES users (username)
