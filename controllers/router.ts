@@ -146,7 +146,10 @@ router.post('/register',async(req,res)=>{
         res.redirect('/register')
     }
 })
-router.all('/',(req,res) => {
+router.get('/',(req,res) => {
     renderPage(req,res,'homepage','Stories App')
+})
+router.get('/*',(req,res)=>{
+    renderPage(req,res,'404',"Page Not Found")
 })
 export default router
