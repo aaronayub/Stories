@@ -4,6 +4,8 @@ import bcrypt from 'bcrypt'
 import crypto from 'crypto'
 import con from './sql'
 import cookieParser from 'cookie-parser'
+import sessionToken from './sessionToken'
+import renderPage from './renderPage'
 var router = express.Router()
 
 // Express-session variables must be declaration merged with typescript
@@ -19,45 +21,22 @@ router.use(express.static('public'))
 router.use(session({secret: "StoriesApp session secret",saveUninitialized: false, resave: false}))
 router.use(express.urlencoded({extended:false}))
 router.use(cookieParser())
-
-// Automatically log the user in if they have a valid authentication token
-router.use(async (req,res,next)=>{
-    if (!req.session.username && req.cookies.token) {
-        await con.promise().query('SELECT username FROM logins WHERE token = ?',
-        [req.cookies.token]).then(([rows,fields])=>{
-            if (rows[0]) { // If this is a valid token, then log the user in
-                req.session.username = rows[0].username
-            }
-            else { // Otherwise, erase the token from the user's cookies
-                res.clearCookie('token')
-            }
-        })
-    }
-    next()
-})
-
+router.use(sessionToken)
 
 router.get('/login',(req,res)=>{
     if (req.session.username) {
+        req.session.output = "You are already logged in."
         res.redirect('/')
         return
     }
-    res.render('login',{
-        title: "Log In",
-        username: req.session.username,
-        output: req.session.output
-    })
-    delete req.session.output
+    renderPage(req,res,'login','Log In')
 })
 router.get('/new',(req,res)=>{
     if (!req.session.username) {
         res.redirect('/')
         return
     }
-    res.render('new',{
-        title: "Add New Story",
-        username: req.session.username
-    })
+    renderPage(req,res,'new','Add New Story')
 })
 router.post('/new',async (req,res)=>{
     if (!req.session.username) {
@@ -85,29 +64,20 @@ router.post('/new',async (req,res)=>{
 })
 router.get('/stories',(req,res)=>{
     if (!req.session.username) {
+        req.session.output = "You have to be logged in to view your stories."
         res.redirect('/')
         return
     }
-    res.render('stories',{
-        title: "Your Stories",
-        username: req.session.username,
-        output: req.session.output,
-        success: req.session.success
-    })
-    delete req.session.output
-    delete req.session.success
+    
+    renderPage(req,res,'stories','Your Stories')
 })
-router.get('/register',(req,res,next)=>{
+router.get('/register',(req,res)=>{
     if (req.session.username) {
+        req.session.output = "You are already logged in with your account. Please log out if you would like to register for a new account."
         res.redirect('/')
         return
     }
-    res.render('register',{
-        title: "Register",
-        username: req.session.username,
-        output: req.session.output
-    })
-    delete req.session.output
+    renderPage(req,res,'register','Register')
 })
 router.get('/logout',(req,res)=>{
     delete req.session.username
@@ -166,6 +136,8 @@ router.post('/register',async(req,res)=>{
             [req.body.username,hash,'user'], (err,result)=>{
                 if (err) console.log(err)
                 req.session.username = req.body.username
+                req.session.output = "Successfully registered!"
+                req.session.success = true
                 res.redirect('/')
             })
         })
@@ -175,9 +147,6 @@ router.post('/register',async(req,res)=>{
     }
 })
 router.all('/',(req,res) => {
-    res.render('homepage',{
-        username: req.session.username,
-        title: "Stories App"
-    })
+    renderPage(req,res,'homepage','Stories App')
 })
 export default router

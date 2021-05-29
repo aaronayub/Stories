@@ -1,6 +1,6 @@
 import express from 'express'
 import exphbs from 'express-handlebars'
-import router from './router'
+import router from './controllers/router'
 
 var app = express()
 var port = 3000
