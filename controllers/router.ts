@@ -6,16 +6,9 @@ import con from './sql'
 import cookieParser from 'cookie-parser'
 import sessionToken from './sessionToken'
 import renderPage from './renderPage'
+import Story from '../interfaces/story'
+import '../interfaces/sessionData'
 var router = express.Router()
-
-// Express-session variables must be declaration merged with typescript
-declare module 'express-session' {
-    interface SessionData {
-        username: string,
-        output: string,
-        success: boolean
-    }
-}
 
 router.use(express.static('public'))
 router.use(session({secret: "StoriesApp session secret",saveUninitialized: false, resave: false}))
@@ -23,6 +16,25 @@ router.use(express.urlencoded({extended:false}))
 router.use(cookieParser())
 router.use(sessionToken)
 
+router.get('/read-:id([0-9]{1,})',async (req,res)=>{
+    let story: Story | null = null
+    let title: string = "Story Not Found!"
+    await con.promise().query("SELECT * FROM stories WHERE id = ?",[
+        req.params.id]).then(([rows,fields])=>{
+            if (rows[0]) {
+                story = {
+                    id: rows[0].id,
+                    title: rows[0].title,
+                    brief: rows[0].brief,
+                    content: rows[0].content,
+                    username: rows[0].username,
+                    rating: rows[0].rating,
+                }
+                title = story.title
+            }
+        })
+    renderPage(req,res,'read',title,story)
+})
 router.get('/login',(req,res)=>{
     if (req.session.username) {
         req.session.output = "You are already logged in."
@@ -89,14 +101,14 @@ router.get('/logout',(req,res)=>{
     res.redirect('/')
 })
 router.post('/login',async(req,res)=>{
-    var compare = null
+    let compare: string | null = null
     await con.promise().query('SELECT pass FROM users WHERE username = ?',
     [req.body.username]).then(([rows,fields])=>{
         if (rows[0]) {
             compare = rows[0].pass
         }
     })
-    var matches = false
+    let matches: boolean = false
     if (compare) {
         matches = await bcrypt.compare(req.body.password,compare)
     }
@@ -104,11 +116,11 @@ router.post('/login',async(req,res)=>{
         req.session.username = req.body.username
 
         if (req.body.remember) { // If the user wants to be remembered across sessions
-            var token = crypto.randomBytes(64).toString('hex')
+            let token: string = crypto.randomBytes(64).toString('hex')
             con.query('INSERT INTO logins (token,username) VALUES (?,?)',
             [token,req.body.username])
 
-            var expiry = new Date()
+            let expiry: Date = new Date()
             expiry.setDate(expiry.getDate() + 14)
             res.cookie('token',token,{expires: expiry})
         }
@@ -120,7 +132,7 @@ router.post('/login',async(req,res)=>{
     res.redirect('/login')
 })
 router.post('/register',async(req,res)=>{
-    var valid = true // User is eligible for registering
+    let valid: boolean = true // User is eligible for registering
     if (req.body.password.length < 6) valid = false // If the password isn't of the required length
     else if (req.body.confirm !== req.body.password) valid = false // If the password and confirmed password don't match
     await con.promise().query('SELECT username FROM users WHERE username = ?',

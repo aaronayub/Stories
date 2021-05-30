@@ -1,0 +1,21 @@
+{{!This is the page where a user can read a story}}
+
+{{#if story}}
+<center>
+    <h2>{{story.title}}</h2>
+    <h4>by {{story.username}}</h4>
+</center>
+<div class="divider"></div>
+<div class="section">
+    {{story.content}}
+</div>
+<div class="divider"></div>
+Story Rating: {{story.rating}}
+{{else}}
+<div class="section">
+    <center>
+        <h1>Story Not Found!</h1>
+        Sorry, but there is no story with the id from this link. It may have been deleted.
+    </center>
+</div>
+{{/if}}
