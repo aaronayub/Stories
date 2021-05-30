@@ -1,17 +1,29 @@
 <div class="section">
     <form method="post">
-        <div class="input field">
+        <div class="input-field">
             <label for="title">Title: </label>
-            <input placeholder="Story Title" name="title" id="title" required data-length="10">
+            <input placeholder="Story Title" name="title" id="title" type="text" required>
         </div>
-        <div class="input field">
-            <label for="desc">Description: </label>
-            <input placeholder="Add a brief description of your story. (Max length of 512 characters)" name="desc" id="desc">
+        <div class="input-field">
+            <label for="desc">Description (Optional): </label>
+            <input placeholder="Add a brief description of your story. (Max length of 512 characters)" type="text" name="desc" id="desc">
         </div>
-        <div class="input field">
+        <div class="input-field">
             <label for="content">Story Content: </label>
-            <textarea class="materialize-textarea" placeholder="Write the story here!" name="content" id="content"></textarea>
+            <textarea class="materialize-textarea" placeholder="Write the story here!" type="text" name="content" id="content"></textarea>
         </div>
-        <button class="btn light-green" name="submit">Create New Story</button>
+        {{!-- <div class="file-field input-field">
+            <div class="btn light-green">
+                <span>Upload Cover</span>
+                <input type="file">
+            </div>
+            <div class="file-path-wrapper">
+                <input name="cover" class="file-path validate" type="text" placeholder="(Optional) Supported filetypes are .jpg, .jpeg, and .png">
+            </div>
+        </div> --}}
+        <div class="divider"></div>
+        <div class="input-field">
+            <button class="btn light-green" name="submit">Create New Story</button>
+        </div>
     </form>
 </div>
