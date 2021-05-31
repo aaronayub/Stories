@@ -17,6 +17,7 @@ router.get('/:id([0-9]{1,})',async (req,res)=>{
                     content: rows[0].content,
                     username: rows[0].username,
                     rating: rows[0].rating,
+                    created: rows[0].created.toLocaleDateString()
                 }
                 title = story.title
             }

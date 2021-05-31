@@ -6,7 +6,8 @@ interface Story {
     brief?: string,
     content: string,
     username: string,
-    rating: number
+    rating: number,
+    created: string
 }
 
 export default Story
