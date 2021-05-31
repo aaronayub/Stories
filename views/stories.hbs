@@ -1,3 +1,12 @@
 <div class="section">
+    <center><h3>Your Stories</h3></center>
+    {{#unless stories}}
+    You have no stories. You can add a new one by clicking the button below!
+    {{else}}
+    Total stories uploaded: {{stories.length}}
+    {{/unless}}
+</div>
+<div class="divider"></div>
+<div class="section">
     <a class="btn light-green" href="/new">Add A New Story</a>
 </div>
