@@ -1,9 +1,34 @@
 <div class="section">
     <center><h3>Your Stories</h3></center>
     {{#unless stories}}
-    You have no stories. You can add a new one by clicking the button below!
+        You have no stories. You can add a new one by clicking the button below!
     {{else}}
-    Total stories uploaded: {{stories.length}}
+        <div class="row">
+        {{#each stories}}
+            <div class="card horizontal col s12 m6 l4">
+                <div class="card-image">
+                    {{#if this.cover}}
+                        <img src="/covers/{{this.id}}">
+                    {{/if}}
+                </div>
+                <div class="card-stacked">
+                    <div class="card-content">
+                        <a href="/read/{{this.id}}">{{this.title}}</a>
+                    </div>
+                    <div class="card-content">
+                        {{#if this.brief}}
+                            {{this.brief}}
+                        {{else}}
+                            No description written.
+                        {{/if}}
+                        <br>
+                        Rating: {{this.rating}}
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+        </div>
+        Total stories uploaded: {{stories.length}}
     {{/unless}}
 </div>
 <div class="divider"></div>

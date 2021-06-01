@@ -2,6 +2,7 @@ import express from 'express'
 import renderPage from './renderPage'
 import con from './sql'
 import Story from '../interfaces/story'
+import fs from 'fs'
 var router = express.Router()
 
 router.get('/',async (req,res)=>{
@@ -22,11 +23,15 @@ router.get('/',async (req,res)=>{
             content: row.content,
             username: row.username,
             rating: row.rating,
-            created: row.created.toLocaleDateString()
+            created: row.created.toLocaleDateString(),
+            cover: false
+        }
+        let imagePath: string = __dirname+"/../public/covers/"+story.id
+        if (fs.existsSync(imagePath)) {
+            story.cover = true
         }
         stories.push(story)
     })
-    console.log(stories)
     renderPage(req,res,'stories','Your Stories',null,stories)
 })
 

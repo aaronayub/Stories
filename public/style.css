@@ -1,4 +1,4 @@
-/* A box displaying feedback to the user*/
+/* A box displaying feedback to the user */
 #outputbox {
     margin-top: 1rem;
     margin-bottom: 1rem;
@@ -6,6 +6,11 @@
     border-radius:1rem;
 }
 
+.card {
+    margin:0.8rem;
+}
+
+/* The navbar at the top of every page */
 nav {
     margin-bottom: 1rem;
 }

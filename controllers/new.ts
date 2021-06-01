@@ -4,7 +4,7 @@ import con from './sql'
 import multer from 'multer'
 import fs from 'fs'
 var router = express.Router()
-const coversPath = "./public/stories/"
+const coversPath = "./public/covers/"
 var upload = multer({dest: coversPath})
 
 router.get('/',(req,res)=>{

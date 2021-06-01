@@ -7,7 +7,8 @@ interface Story {
     content: string,
     username: string,
     rating: number,
-    created: string
+    created: string,
+    cover?: boolean
 }
 
 export default Story
