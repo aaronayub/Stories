@@ -6,6 +6,7 @@
     border-radius:1rem;
 }
 
+/* Used to display the stories in a larger format.*/
 .card {
     margin:0.8rem;
 }
@@ -13,4 +14,9 @@
 /* The navbar at the top of every page */
 nav {
     margin-bottom: 1rem;
+}
+
+/* Determines properties of the 1-5 star rating elements */
+.rating {
+    font-size:xx-large;
 }

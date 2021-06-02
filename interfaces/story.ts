@@ -8,7 +8,8 @@ interface Story {
     username: string,
     rating: number,
     created: string,
-    cover?: boolean
+    cover?: boolean,
+    yourRating?: number
 }
 
 export default Story

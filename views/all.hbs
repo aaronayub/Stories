@@ -12,7 +12,7 @@
         </tr>
         {{#each stories}}
             <tr>
-                <td>{{this.title}}</td>
+                <td><a href="/read/{{this.id}}">{{this.title}}</a></td>
                 <td>{{this.username}}</td>
                 <td>{{this.rating}}</td>
                 <td>{{this.brief}}</td>

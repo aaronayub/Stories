@@ -1,6 +1,7 @@
 {{!This is the page where a user can read a story}}
 
 {{#if story}}
+<script src="/scripts.js"></script>
 <center>
     <h2>{{story.title}}</h2>
     <h4>by {{story.username}}</h4>
@@ -11,7 +12,16 @@
     {{story.content}}
 </div>
 <div class="divider"></div>
-Story Rating: {{story.rating}}
+{{#if username}} {{! Users can rate stories only if logged in. }}
+    Rate this story:
+    <span class="rating" id="rate1" onclick="rateStory(1)">&#9734;</span>
+    <span class="rating" id="rate2" onclick="rateStory(2)">&#9734;</span>
+    <span class="rating" id="rate3" onclick="rateStory(3)">&#9734;</span>
+    <span class="rating" id="rate4" onclick="rateStory(4)">&#9734;</span>
+    <span class="rating" id="rate5" onclick="rateStory(5)">&#9734;</span>
+    <div id="currentRating">Current Rating: {{story.rating}}</div>
+    <script>showUserRating({{story.yourRating}});</script>
+{{/if}}
 {{else}}
 <div class="section">
     <center>
