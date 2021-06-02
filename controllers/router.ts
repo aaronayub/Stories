@@ -21,11 +21,13 @@ import register from './register'
 import newstory from './new'
 import stories from './stories'
 import read from './read'
+import all from './all'
 router.use('/login',login)
 router.use('/register',register)
 router.use('/new',newstory)
 router.use('/stories',stories)
 router.use('/read',read)
+router.use('/all',all)
 
 // All the other, common or short routes are defined here
 router.get('/logout',(req,res)=>{

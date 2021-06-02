@@ -1,0 +1,23 @@
+<div class="section">
+    <center><h3>All Stories</h3></center>
+    {{#unless stories}}
+    <center><h5>No stories have been uploaded yet!</h5></center>
+    {{else}}
+    <table class="striped highlight">
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Rating</th>
+            <th>Brief</th>
+        </tr>
+        {{#each stories}}
+            <tr>
+                <td>{{this.title}}</td>
+                <td>{{this.username}}</td>
+                <td>{{this.rating}}</td>
+                <td>{{this.brief}}</td>
+            </tr>
+        {{/each}}
+    </table>
+    {{/unless}}
+</div>
