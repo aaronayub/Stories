@@ -14,12 +14,12 @@
 <div class="divider"></div>
 {{#if username}} {{! Users can rate stories only if logged in. }}
     Rate this story:
-    <span class="rating" id="rate1" onclick="rateStory(1)">&#9734;</span>
-    <span class="rating" id="rate2" onclick="rateStory(2)">&#9734;</span>
-    <span class="rating" id="rate3" onclick="rateStory(3)">&#9734;</span>
-    <span class="rating" id="rate4" onclick="rateStory(4)">&#9734;</span>
-    <span class="rating" id="rate5" onclick="rateStory(5)">&#9734;</span>
-    <div id="currentRating">Current Rating: {{story.rating}}</div>
+    <span class="rating" id="rate1" onclick="rateStory({{story.id}},1)">&#9734;</span>
+    <span class="rating" id="rate2" onclick="rateStory({{story.id}},2)">&#9734;</span>
+    <span class="rating" id="rate3" onclick="rateStory({{story.id}},3)">&#9734;</span>
+    <span class="rating" id="rate4" onclick="rateStory({{story.id}},4)">&#9734;</span>
+    <span class="rating" id="rate5" onclick="rateStory({{story.id}},5)">&#9734;</span>
+    <div>Current Rating: <span id="currentRating">{{story.rating}}</span></div>
     <script>showUserRating({{story.yourRating}});</script>
 {{/if}}
 {{else}}

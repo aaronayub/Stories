@@ -17,6 +17,14 @@ function showUserRating(rating) {
 }
 
 /* Sends a request to the server to rate the story */
-function rateStory(rating) {
-    
+function rateStory(id,rating) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            showUserRating(rating); // Update the rating displayed to the user
+            document.getElementById("currentRating").innerHTML = this.responseText;
+        }
+    };
+    xhttp.open("POST", "/read/"+id+"/"+rating, true);
+    xhttp.send();
 }
