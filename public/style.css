@@ -30,3 +30,8 @@ nav {
 .rateOn {
     color:goldenrod;
 }
+
+td {
+    max-width:0rem;
+    overflow-wrap:break-word;
+}

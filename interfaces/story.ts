@@ -4,7 +4,7 @@ interface Story {
     id: number,
     title: string,
     brief?: string,
-    content: string,
+    content?: string,
     username: string,
     rating: number,
     created: string,

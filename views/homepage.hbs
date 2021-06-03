@@ -1,3 +1,29 @@
 {{#if username}}
-<h2>Hello {{username}}</h2>
+<h5>Hello {{username}}</h5>
+{{/if}}
+
+{{#if story}}
+<div class="section">
+    <center>
+        <h5>Best Story</h5>
+        {{>storyCard id=story.id title=story.title brief=story.brief rating=story.rating created=story.created}}
+    </center>
+</div>
+{{else}}
+<center>
+    No stories have been uploaded yet.
+</center>
+{{/if}}
+
+{{#if stories}}
+    <center>
+        <h5>Recent Stories</h5>
+    </center>
+    <div class="row">
+        {{#each stories}}
+            <div class="col s12 m6 l4">
+                {{>storyCard id=this.id title=this.title brief=this.brief rating=this.rating created=this.created}}
+            </div>
+        {{/each}}
+    </div>
 {{/if}}

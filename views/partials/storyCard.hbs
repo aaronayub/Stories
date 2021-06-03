@@ -1,0 +1,21 @@
+<div class="card horizontal">
+    <div class="card-image">
+        {{#if cover}}
+            <img src="/covers/{{id}}">
+        {{/if}}
+    </div>
+    <div class="card-stacked">
+        <div class="card-content">
+            <a href="/read/{{id}}">{{title}}</a>
+        </div>
+        <div class="card-content">
+            {{#if brief}}
+                {{brief}}
+            {{else}}
+                No description written.
+            {{/if}}
+            <br>
+            Rating: {{rating}}
+        </div>
+    </div>
+</div>

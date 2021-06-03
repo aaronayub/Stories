@@ -5,26 +5,8 @@
     {{else}}
         <div class="row">
         {{#each stories}}
-            <div class="card horizontal col s12 m6 l4">
-                <div class="card-image">
-                    {{#if this.cover}}
-                        <img src="/covers/{{this.id}}">
-                    {{/if}}
-                </div>
-                <div class="card-stacked">
-                    <div class="card-content">
-                        <a href="/read/{{this.id}}">{{this.title}}</a>
-                    </div>
-                    <div class="card-content">
-                        {{#if this.brief}}
-                            {{this.brief}}
-                        {{else}}
-                            No description written.
-                        {{/if}}
-                        <br>
-                        Rating: {{this.rating}}
-                    </div>
-                </div>
+            <div class="col s12 m6 l4">
+                {{>storyCard id=this.id title=this.title brief=this.brief rating=this.rating created=this.created}}
             </div>
         {{/each}}
         </div>

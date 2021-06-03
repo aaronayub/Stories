@@ -22,12 +22,14 @@ import newstory from './new'
 import stories from './stories'
 import read from './read'
 import all from './all'
+import home from './home'
 router.use('/login',login)
 router.use('/register',register)
 router.use('/new',newstory)
 router.use('/stories',stories)
 router.use('/read',read)
 router.use('/all',all)
+router.use('/',home)
 
 // All the other, common or short routes are defined here
 router.get('/logout',(req,res)=>{
@@ -38,9 +40,6 @@ router.get('/logout',(req,res)=>{
     }
 
     res.redirect('/')
-})
-router.get('/',(req,res) => {
-    renderPage(req,res,'homepage','Stories App')
 })
 router.get('/*',(req,res)=>{
     renderPage(req,res,'404',"Page Not Found")
