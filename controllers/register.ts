@@ -16,13 +16,12 @@ router.post('/',async(req,res)=>{
     let valid: boolean = true // User is eligible for registering
     if (req.body.password.length < 6) valid = false // If the password isn't of the required length
     else if (req.body.confirm !== req.body.password) valid = false // If the password and confirmed password don't match
-    await con.promise().query('SELECT username FROM users WHERE username = ?',
-    [req.body.username]).then(([rows,fields]) => {
-        if (rows[0]) {
-            valid = false
-            req.session.output = "Sorry, this username is already taken."
-        }
-    })
+    let [rows] = await con.promise().query('SELECT username FROM users WHERE username = ?',
+    [req.body.username])
+    if (rows[0]) {
+        valid = false
+        req.session.output = "Sorry, this username is already taken."
+    }
     if (valid) {
         bcrypt.hash(req.body.password,10,(err,hash)=>{
             con.query('INSERT INTO users (username,pass,account) VALUES (?,?,?)',

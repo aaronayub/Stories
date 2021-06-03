@@ -14,18 +14,13 @@ router.get('/',(req,res)=>{
     renderPage(req,res,'login','Log In')
 })
 router.post('/',async(req,res)=>{
-    let compare: string | null = null
-    await con.promise().query('SELECT pass FROM users WHERE username = ?',
-    [req.body.username]).then(([rows,fields])=>{
-        if (rows[0]) {
-            compare = rows[0].pass
-        }
-    })
-    let matches: boolean = false
-    if (compare) {
-        matches = await bcrypt.compare(req.body.password,compare)
-    }
-    if (matches) { // Credentials match, so the user logs in
+    let givenPass: string | null = null
+    let passMatches: boolean = false
+    let [rows] = await con.promise().query('SELECT pass FROM users WHERE username = ?',
+    [req.body.username])
+    if (rows[0]) givenPass = rows[0].pass
+    if (givenPass) passMatches = await bcrypt.compare(req.body.password,givenPass)
+    if (passMatches) { // Credentials match, so the user logs in
         req.session.username = req.body.username
 
         if (req.body.remember) { // If the user wants to be remembered across sessions

@@ -20,3 +20,13 @@ nav {
 .rating {
     font-size:xx-large;
 }
+
+.rating:hover {
+    transition:300ms;
+    opacity:50%;
+}
+
+/* Optional class to give rated stars other styles (e.g. gold-colored). */
+.rateOn {
+    color:goldenrod;
+}
