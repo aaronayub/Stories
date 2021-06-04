@@ -1,0 +1,29 @@
+{{! A user's profile page }}
+
+{{#if exists}}
+<center>
+    <h2>Profile of {{title}}</h2>
+</center>
+{{#if stories}}
+    <h4>Stories by {{title}}</h4>
+    <div class="row">
+        {{#each stories}}
+        <div class="col s12 m6 l4">
+            {{>storyCard story=this}}
+        </div>
+        {{/each}}
+    </div>
+{{else}}
+    <center>
+        <h4>{{title}} has not uploaded any stories yet.</h4>
+    </center>
+{{/if}}
+
+{{else}}
+<div class="section">
+    <center>
+        <h1>User Not Found!</h1>
+        Sorry, but there is no user with this username.
+    </center>
+</div>
+{{/if}}

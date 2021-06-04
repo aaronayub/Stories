@@ -21,6 +21,7 @@ import register from './register'
 import newstory from './new'
 import stories from './stories'
 import read from './read'
+import user from './user'
 import all from './all'
 import home from './home'
 router.use('/login',login)
@@ -28,6 +29,7 @@ router.use('/register',register)
 router.use('/new',newstory)
 router.use('/stories',stories)
 router.use('/read',read)
+router.use('/user',user)
 router.use('/all',all)
 router.use('/',home)
 

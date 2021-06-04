@@ -1,21 +1,24 @@
 <div class="card horizontal">
     <div class="card-image">
-        {{#if cover}}
-            <img src="/covers/{{id}}">
+        {{#if story.cover}}
+            <img src="/covers/{{story.id}}">
         {{/if}}
     </div>
     <div class="card-stacked">
         <div class="card-content">
-            <a href="/read/{{id}}">{{title}}</a>
+            <a href="/read/{{story.id}}">{{story.title}}</a>
         </div>
         <div class="card-content">
-            {{#if brief}}
-                {{brief}}
+            <div>
+                Author: <a href="/user/{{story.username}}">{{story.username}}</a>
+            </div>
+            {{#if story.brief}}
+                {{story.brief}}
             {{else}}
                 No description written.
             {{/if}}
             <br>
-            Rating: {{rating}}
+            Rating: {{story.rating}}
         </div>
     </div>
 </div>

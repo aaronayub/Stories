@@ -6,7 +6,7 @@
         <div class="row">
         {{#each stories}}
             <div class="col s12 m6 l4">
-                {{>storyCard id=this.id title=this.title brief=this.brief rating=this.rating created=this.created}}
+                {{>storyCard story=this}}
             </div>
         {{/each}}
         </div>
