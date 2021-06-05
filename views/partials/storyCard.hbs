@@ -12,12 +12,13 @@
             <div>
                 Author: <a href="/user/{{story.username}}">{{story.username}}</a>
             </div>
-            {{#if story.brief}}
-                {{story.brief}}
-            {{else}}
-                No description written.
-            {{/if}}
-            <br>
+            <div class="story-brief">
+                {{#if story.brief}}
+                    {{story.brief}}
+                {{else}}
+                    No description written.
+                {{/if}}
+            </div>
             Rating: {{story.rating}}
         </div>
     </div>

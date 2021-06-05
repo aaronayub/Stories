@@ -35,3 +35,12 @@ td {
     max-width:0rem;
     overflow-wrap:break-word;
 }
+
+.section {
+    overflow-wrap:break-word;
+}
+
+/* Minimize the width of the rating column */
+table tr th:nth-child(4) {
+    width:7ch;
+}
