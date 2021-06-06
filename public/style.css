@@ -44,3 +44,8 @@ td {
 table tr th:nth-child(4) {
     width:7ch;
 }
+
+/* Prevent a very long word from stretching out of the card's boundaries. */
+.card-stacked {
+    overflow:hidden;
+}
