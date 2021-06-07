@@ -9,6 +9,7 @@ var upload = multer({dest: coversPath})
 
 router.get('/',(req,res)=>{
     if (!req.session.username) {
+        req.session.output = "You must be logged in to create a story."
         res.redirect('/')
         return
     }

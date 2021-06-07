@@ -49,3 +49,7 @@ table tr th:nth-child(4) {
 .card-stacked {
     overflow:hidden;
 }
+
+.edit-button {
+    margin-top:0.5rem;
+}

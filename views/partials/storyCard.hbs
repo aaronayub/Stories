@@ -20,6 +20,11 @@
                 {{/if}}
             </div>
             Rating: {{story.rating}}
+            {{#if edit}}
+            <div class="edit-button">
+                <a href="/edit/{{story.id}}" class="btn-small light-green">Edit Story</a>
+            </div>
+            {{/if}}
         </div>
     </div>
 </div>

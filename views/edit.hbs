@@ -1,0 +1,29 @@
+<div class="section">
+    <form method="post" action="/edit/{{story.id}}" enctype="multipart/form-data">
+        <div class="input-field">
+            <label for="title">Title: </label>
+            <input value="{{story.title}}" placeholder="Story Title" name="title" id="title" type="text" required>
+        </div>
+        <div class="input-field">
+            <label for="brief">Description (Optional): </label>
+            <input value="{{story.brief}}" placeholder="Add a brief description of your story. (Max length of 256 characters)" type="text" name="brief" id="brief" maxlength="256">
+        </div>
+        <div class="input-field">
+            <label for="content">Story Content: </label>
+            <textarea class="materialize-textarea" placeholder="Write the story here!" type="text" name="content" id="content">{{story.content}}</textarea>
+        </div>
+        <div class="file-field input-field">
+            <div class="btn light-green">
+                <span>Upload Cover</span>
+                <input name="cover" type="file">
+            </div>
+            <div class="file-path-wrapper">
+                <input class="file-path validate" type="text" placeholder="(Optional) Supported filetypes are .jpg, .jpeg, and .png">
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="input-field">
+            <button class="btn light-green" name="edit">Edit Story</button>
+        </div>
+    </form>
+</div>

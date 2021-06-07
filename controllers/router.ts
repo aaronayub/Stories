@@ -19,6 +19,7 @@ router.use(sessionToken)
 import login from './login'
 import register from './register'
 import newstory from './new'
+import edit from './edit'
 import stories from './stories'
 import read from './read'
 import user from './user'
@@ -27,6 +28,7 @@ import home from './home'
 router.use('/login',login)
 router.use('/register',register)
 router.use('/new',newstory)
+router.use('/edit',edit)
 router.use('/stories',stories)
 router.use('/read',read)
 router.use('/user',user)
