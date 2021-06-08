@@ -52,17 +52,6 @@ router.post('/:id([0-9]{1,})', upload.single('cover'), async (req,res)=>{
         res.redirect('/')
         return
     }
-    else if (!req.body.title) {
-        req.session.output = "Your story must have a title."
-        res.redirect('/new')
-        return
-    }
-    else if (!req.body.content) {
-        req.session.output = "You can't upload a blank story."
-        res.redirect('/new')
-        return
-    }
-    
     let username: string | null = null
     let [rows] = await con.promise().query("SELECT username FROM stories WHERE id = ?",
     [req.params.id])
@@ -72,6 +61,29 @@ router.post('/:id([0-9]{1,})', upload.single('cover'), async (req,res)=>{
     if (req.session.username != username) {
         req.session.output = "You do not have permission to edit this story."
         res.redirect('/')
+        return
+    }
+
+    // If the user wants to delete a story
+    if (req.body.delete) {
+        con.query("DELETE FROM stories WHERE id=?",
+        [req.params.id])
+        // Delete the cover too, if it exists
+        fs.unlink(coversPath+req.params.id,()=>{})
+        req.session.output = "Story deleted!"
+        req.session.success = true
+        res.redirect('/stories')
+        return
+    }
+
+    else if (!req.body.title) {
+        req.session.output = "Your story must have a title."
+        res.redirect('/edit/'+req.params.id)
+        return
+    }
+    else if (!req.body.content) {
+        req.session.output = "You can't upload a blank story."
+        res.redirect('/edit/'+req.params.id)
         return
     }
 
