@@ -6,6 +6,9 @@
     <h2>{{story.title}}</h2>
     <h4>by <a href="/user/{{story.username}}">{{story.username}}</a></h4>
     Written {{story.created}}
+    {{#if story.cover}}
+    <div><img class="readcover" src="/covers/{{story.id}}"></div>
+    {{/if}}
 </center>
 <div class="divider"></div>
 <div class="section">
