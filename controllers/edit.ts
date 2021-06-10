@@ -87,8 +87,13 @@ router.post('/:id([0-9]{1,})', upload.single('cover'), async (req,res)=>{
         return
     }
 
+
+    // If the user wants to remove the book's cover
+    if (req.body.removeCover) {
+        fs.unlink(coversPath+req.params.id,()=>{})
+    }
     // If the author also uploaded a book cover, check that it meets some requirements
-    if (req.file) { 
+    if (req.file && !req.body.removeCover) { 
         if (!(req.file.mimetype == 'image/jpeg'
             || req.file.mimetype == 'image/jpg'
             || req.file.mimetype == 'image/gif'
@@ -107,7 +112,7 @@ router.post('/:id([0-9]{1,})', upload.single('cover'), async (req,res)=>{
 
     const results: any = await con.promise().query("UPDATE stories SET title=?, brief=?, content=?, username=? WHERE id = ?",
     [req.body.title,req.body.brief,req.body.content,req.session.username,req.params.id])
-    if (req.file) { // Upload the cover now with the corresponding id if needed
+    if (req.file && !req.body.removeCover) { // Upload the cover now with the corresponding id if needed
         fs.renameSync(coversPath+req.file.filename,coversPath+req.params.id)
     }
     req.session.output = "Story updated!"
