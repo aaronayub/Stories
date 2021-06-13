@@ -40,13 +40,15 @@ router.get('/:id([0-9]{1,})',async (req,res)=>{
 
     // Get comments if the story exists
     if (exists) {
-        const [results]: any = await con.promise().query("SELECT * FROM storyComments WHERE id=?",
+        // Get all comments for this story, and include the user's rating of the story, if that user has rated the story.
+        const [results]: any = await con.promise().query("SELECT storyComments.*, ratings.rating FROM storyComments LEFT JOIN ratings ON (storyComments.username=ratings.username AND storyComments.id=ratings.id) WHERE storyComments.id=?",
         [req.params.id])
         results.forEach((row: any)=>{
             let comment: Comment = {
                 username: row.username,
                 created: row.created.toLocaleString(),
-                comment: row.comment
+                comment: row.comment,
+                rating: row.rating
             }
             comments.push(comment)
         })

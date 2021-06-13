@@ -4,6 +4,11 @@
         <span>{{this.created}}</span>
     </div>
     <div class="commentLower">
+        <div>
+            {{#if this.rating}}
+            Rating: {{this.rating}}
+            {{/if}}
+        </div>
         {{this.comment}}
     </div>
 </div>

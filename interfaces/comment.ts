@@ -3,7 +3,8 @@
 interface Comment {
     comment: string,
     created: string,
-    username: string
+    username: string,
+    rating?: number
 }
 
 export default Comment

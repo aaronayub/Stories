@@ -36,7 +36,7 @@
 {{#if comments}}
 <div class="section comments">
     {{#each comments}}
-        {{>commentBox username=this.username comment=this.comment created=this.created}}
+        {{>commentBox this}}
     {{/each}}
 </div>
 {{else}}
