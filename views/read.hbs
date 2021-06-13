@@ -24,6 +24,13 @@
     <span class="rating" id="rate5" onclick="rateStory({{story.id}},5)">&#9734;</span>
     <div>Current Rating: <span id="currentRating">{{story.rating}}</span></div>
     <script>showUserRating({{story.yourRating}});</script>
+
+    <div class="section">
+        <form method="post" action="/read/{{story.id}}/comment">
+            <textarea class="materialize-textarea" name="comment" required placeholder="Leave a comment here!" type="text" maxlength="512"></textarea>
+            <button class="btn light-green">Leave Comment</button>
+        </form>
+    </div>
 {{/if}}
 {{else}}
 <div class="section">

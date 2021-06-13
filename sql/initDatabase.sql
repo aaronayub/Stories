@@ -30,7 +30,7 @@ CREATE TABLE stories (
 
 /* All ratings for a given story, by a given user*/
 CREATE TABLE ratings (
-    id INT UNSIGNED AUTO_INCREMENT NOT NULL,
+    id INT UNSIGNED NOT NULL,
     username VARCHAR(40) NOT NULL,
     rating TINYINT NOT NULL,
     PRIMARY KEY (id, username),
@@ -48,6 +48,21 @@ CREATE TABLE logins (
     username VARCHAR(40) NOT NULL,
     created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (username) REFERENCES users (username)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+/* User comments on a story */
+CREATE TABLE storyComments (
+    cid INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    id INT UNSIGNED NOT NULL,
+    username VARCHAR(40) NOT NULL,
+    comment VARCHAR(512) NOT NULL,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (username) REFERENCES users (username)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    FOREIGN KEY (id) REFERENCES stories (id)
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );

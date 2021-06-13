@@ -69,5 +69,23 @@ router.post('/:id([0-9]{1,})/:rating([0-5])', async (req,res) =>{
         res.status(400).send('Invalid request!')
     }
 })
+// If the user wants to leave a comment
+router.post('/:id([0-9]{1,})/comment',async(req,res)=>{
+    if (!req.session.username) {
+        req.session.output = "You must be logged in to leave comments."
+        return;
+    }
+    try { // Use a try catch block to prevent users from trying to comment stories that don't exist
+        await con.promise().query("INSERT INTO storyComments (id,username,comment) VALUES (?,?,?)",
+        [req.params.id,req.session.username,req.body.comment])
+    }
+    catch (err) {
+        req.session.output = "This story doesn't exist!"
+        res.redirect('/')
+        return;
+    }
+    
+    res.redirect('/read/'+req.params.id)
+})
 
 export default router
