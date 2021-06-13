@@ -32,6 +32,20 @@
         </form>
     </div>
 {{/if}}
+
+{{#if comments}}
+<div class="section comments">
+    {{#each comments}}
+        {{>commentBox username=this.username comment=this.comment created=this.created}}
+    {{/each}}
+</div>
+{{else}}
+    {{#if username}}
+        This story has no comments. Be the first to leave one!
+    {{else}}
+        This story has no comments. <a href="/login">Log in</a> to leave one!
+    {{/if}}
+{{/if}}
 {{else}}
 <div class="section">
     <center>

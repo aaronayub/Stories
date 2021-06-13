@@ -64,3 +64,22 @@ table tr th:nth-child(4) {
 .readcover {
     max-width:50%;
 }
+
+/* Comments left by users have three portions. An outer-box which holds everything, the upper part of the box, and the lower part which holds the comment itself. */
+
+/* Don't give the first comment a top-border. */
+.comments .commentOuter:first-child {
+    border-top: none;
+}
+.commentOuter {
+    padding-top:0.5rem;
+    margin-bottom:0.5rem;
+    border-top:1px solid rgb(127, 168, 138);
+    display: flex;
+    flex-direction: column;
+}
+.commentUpper {
+    display:flex;
+    justify-content:space-between;
+    flex-direction:row;
+}

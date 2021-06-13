@@ -1,12 +1,13 @@
 import express from 'express'
-import renderPage from './renderPage'
 import con from './sql'
 import Story from '../interfaces/story'
+import Comment from '../interfaces/comment'
 import fs from 'fs'
 var router = express.Router()
 
 router.get('/:id([0-9]{1,})',async (req,res)=>{
     let story: Story | null = null
+    let comments: Comment[] = []
     let title: string = "Story Not Found!"
     let exists: boolean = false // Set to true if this story exists
     let [rows] = await con.promise().query("SELECT * FROM stories WHERE id = ?",
@@ -36,7 +37,31 @@ router.get('/:id([0-9]{1,})',async (req,res)=>{
             req.params.id,req.session.username])
         if (story && rows[0]) story.yourRating = rows[0].rating
     }
-    renderPage(req,res,'read',title,story)
+
+    // Get comments if the story exists
+    if (exists) {
+        const [results]: any = await con.promise().query("SELECT * FROM storyComments WHERE id=?",
+        [req.params.id])
+        results.forEach((row: any)=>{
+            let comment: Comment = {
+                username: row.username,
+                created: row.created.toLocaleString(),
+                comment: row.comment
+            }
+            comments.push(comment)
+        })
+    }
+
+    res.render('read',{
+        title: title,
+        username: req.session.username,
+        output: req.session.output,
+        success: req.session.success,
+        story: story,
+        comments: comments
+    })
+    delete req.session.output
+    delete req.session.success
 })
 // If the user wants to rate a story, it is done here
 router.post('/:id([0-9]{1,})/:rating([0-5])', async (req,res) =>{

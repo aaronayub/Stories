@@ -2,7 +2,7 @@
 This webapp allows users to write and display stories to publically. Other users can then read these stories, and rate them as well. Node.js, Express, Typescript, and MySQL are used for this project.
 
 ## Features
-- The homepage will suggest you the top-rated story, and the five most recently updated stories. You can click on their titles or covers to read any of them.
+- The homepage will suggest you the top-rated story, and the five most recently updated stories. You can click on their titles or covers to read any of them. You can leave comments or ratings if you are logged in.
 - You can log in or register by clicking the link in the navbar to the top right.
 - When logged in, you may browse "Your Stories" from the navbar, which also shows a link to create a story.
 - Similarly, any mention of an author is linked to the author's profile page. This lists all the stories the author has uploaded.
