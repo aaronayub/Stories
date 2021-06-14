@@ -9,6 +9,7 @@ CREATE TABLE users (
     username VARCHAR(40) NOT NULL PRIMARY KEY,
     pass VARCHAR(256) NOT NULL,
     account VARCHAR(32) DEFAULT 'user',
+    bio VARCHAR(512),
     registered TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

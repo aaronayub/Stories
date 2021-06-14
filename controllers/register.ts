@@ -40,8 +40,8 @@ router.post('/',async(req,res)=>{
     }
     if (valid) {
         bcrypt.hash(req.body.password,10,(err,hash)=>{
-            con.query('INSERT INTO users (username,pass,account) VALUES (?,?,?)',
-            [req.body.username,hash,'user'], (err,result)=>{
+            con.query('INSERT INTO users (username,pass,account,bio) VALUES (?,?,?,?)',
+            [req.body.username,hash,'user',req.body.bio], (err,result)=>{
                 if (err) console.log(err)
                 req.session.username = req.body.username
                 req.session.output = "Successfully registered!"

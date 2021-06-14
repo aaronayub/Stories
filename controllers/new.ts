@@ -31,7 +31,7 @@ router.post('/', upload.single('cover'), async (req,res)=>{
         res.redirect('/new')
         return
     }
-    
+
     // If the author also uploaded a book cover, check that it meets some requirements
     if (req.file) { 
         if (!(req.file.mimetype == 'image/jpeg'
