@@ -1,0 +1,46 @@
+{{! Users can change their details, such as biography or password on this page}}
+
+<div class="section">
+    <center><h2>Settings</h2></center>
+    <form method="post" action="/settings/profile">
+        <center><h5>Update Profile</h5></center>
+        <div class="input-field">
+            <label for="bio">Biography: </label>
+            <textarea id="bio" name="bio" class="materialize-textarea" maxlength="512">{{bio}}</textarea>
+        </div>
+        <button class="btn light-green">Update Profile</button>
+    </form>
+</div>
+
+<div class="divider"></div>
+
+<div class="section">
+    <center><h5>Change Password</h5></center>
+    <form method="post" action="/settings/password">
+        <div class="input-field">
+            <label for="oldpass">Old Password: </label>
+            <input id="oldpass" name="oldpass" required type="password">
+        </div>
+        <div class="input-field">
+            <label for="newpass">New Password: </label>
+            <input id="newpass" name="newpass" required minlength="6" type="password">
+        </div>
+        <div class="input-field">
+            <label for="confirmpass">Confirm New Password: </label>
+            <input id="confirmpass" name="confirmpass" required minlength="6" type="password">
+        </div>
+        <button class="btn light-green">Change Password</button>
+    </form>
+</div>
+
+<div class="divider"></div>
+
+<div class="section">
+    <center><h5>Delete Account</h5></center>
+    <form method="post" action="/settings/delete">
+        <div class="bspacing">
+            You may delete your account here. If you do so, all of your stories and all of your comments will be removed. Your name will also be available for any other users to register with.
+        </div>
+        <button class="btn red">Delete Account</button>
+    </form>
+</div>

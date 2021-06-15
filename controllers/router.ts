@@ -25,6 +25,7 @@ import read from './read'
 import user from './user'
 import all from './all'
 import home from './home'
+import settings from './settings'
 router.use('/login',login)
 router.use('/register',register)
 router.use('/new',newstory)
@@ -33,6 +34,7 @@ router.use('/stories',stories)
 router.use('/read',read)
 router.use('/user',user)
 router.use('/all',all)
+router.use('/settings',settings)
 router.use('/',home)
 
 // All the other, common or short routes are defined here

@@ -83,3 +83,8 @@ table tr th:nth-child(4) {
     justify-content:space-between;
     flex-direction:row;
 }
+
+/* Helper class to add additional spacing below an element*/
+.bspacing {
+    margin-bottom:1rem;
+}
