@@ -93,5 +93,14 @@ router.post('/delete',async(req,res)=>{
     res.redirect('/')
     return
 })
+router.post('/sessionDelete',async(req,res)=>{
+    con.query("DELETE FROM logins WHERE username=? AND NOT token=?",
+    [req.session.username,req.cookies.token])
+
+    req.session.output = "Logged out of all other sessions!"
+    req.session.success = true
+    res.redirect('/')
+    return
+})
 
 export default router

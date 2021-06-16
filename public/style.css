@@ -88,3 +88,9 @@ table tr th:nth-child(4) {
 .bspacing {
     margin-bottom:1rem;
 }
+
+/* Style for a softer "Delete" link that doesn't stand out too much; used for comments */
+.deleteComment {
+    color:gray;
+    margin-right:1rem;
+}

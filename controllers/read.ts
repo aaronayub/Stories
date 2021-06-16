@@ -48,7 +48,10 @@ router.get('/:id([0-9]{1,})',async (req,res)=>{
                 username: row.username,
                 created: row.created.toLocaleString(),
                 comment: row.comment,
-                rating: row.rating
+                id: row.id,
+                rating: row.rating,
+                cid: row.cid,
+                delete: (req.session.username == row.username)
             }
             comments.push(comment)
         })
@@ -66,7 +69,7 @@ router.get('/:id([0-9]{1,})',async (req,res)=>{
     delete req.session.success
 })
 // If the user wants to rate a story, it is done here
-router.post('/:id([0-9]{1,})/:rating([0-5])', async (req,res) =>{
+router.post('/:id([0-9]{1,})/delete/:rating([0-5])', async (req,res) =>{
     // Send "Bad Request" code if the user tries to rate something without being logged in
     if (!req.session.username) {
         res.status(400).send('You are not logged in!')
@@ -108,6 +111,23 @@ router.post('/:id([0-9]{1,})/comment',async(req,res)=>{
     }
     catch (err) {
         req.session.output = "This story doesn't exist!"
+        res.redirect('/')
+        return;
+    }
+    
+    res.redirect('/read/'+req.params.id)
+})
+router.get('/:id([0-9]{1,})/delete/:cid([0-9]{1,})',async(req,res)=>{
+    if (!req.session.username) {
+        req.session.output = "You must be logged in to delete comments."
+        return;
+    }
+    try { 
+        await con.promise().query("DELETE FROM storyComments WHERE cid=? AND username=?",
+        [req.params.cid,req.session.username]) // Prevent users from deleting another user's comments with the username
+    }
+    catch (err) {
+        req.session.output = "You can't delete another user's comments."
         res.redirect('/')
         return;
     }

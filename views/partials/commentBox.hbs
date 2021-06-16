@@ -1,7 +1,12 @@
 <div class="commentOuter">
     <div class="commentUpper">
         <span><a href='/user/{{this.username}}'>{{this.username}}</a>:</span>
-        <span>{{this.created}}</span>
+        <span>
+            {{#if delete}}
+            <span><a class="deleteComment" href="/read/{{this.id}}/delete/{{this.cid}}">Delete Comment</a></span>
+            {{/if}}
+            <span>{{this.created}}</span>
+        </span>
     </div>
     <div class="commentLower">
         <div>

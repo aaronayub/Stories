@@ -4,7 +4,10 @@ interface Comment {
     comment: string,
     created: string,
     username: string,
-    rating?: number
+    cid: number,
+    id: number,
+    rating?: number,
+    delete?: boolean
 }
 
 export default Comment
