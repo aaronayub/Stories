@@ -69,7 +69,7 @@ router.get('/:id([0-9]{1,})',async (req,res)=>{
     delete req.session.success
 })
 // If the user wants to rate a story, it is done here
-router.post('/:id([0-9]{1,})/delete/:rating([0-5])', async (req,res) =>{
+router.post('/:id([0-9]{1,})/:rating([0-5])', async (req,res) =>{
     // Send "Bad Request" code if the user tries to rate something without being logged in
     if (!req.session.username) {
         res.status(400).send('You are not logged in!')

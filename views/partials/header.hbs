@@ -2,16 +2,20 @@
 <nav class="light-green" role="navigation">
     <div class="nav-wrapper container">
         <a href="/" class="brand-logo left">Stories App</a>
-        <ul class="right">
-            <li><a href="/all">All Stories</a></li>
-            {{#if username}}
-                <li><a href="/user/{{username}}">Your Profile</a></li>
-                <li><a href="/stories">Your Stories</a></li>
-                <li><a href="/settings">Settings</a></li>
-                <li><a href="/logout">Logout</a></li>
-            {{else}}
-                <li><a href="/login">Login / Register</a></li>
-            {{/if}}
+        <ul id="noDropdown" class="right">
+            {{>navMenus}}
+        </ul>
+        <a id="dropdownTrigger" class="right dropdown-trigger" data-target="dropdown">
+            <i class="material-icons noSelect">menu</i></a>
+        <ul id='dropdown' class='dropdown-content'>
+            {{>navMenus}}
         </ul>
     </div>
 </nav>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function(){
+        var elems = document.querySelectorAll('.dropdown-trigger');
+        var instances = M.Dropdown.init(elems,{coverTrigger:false,constrainWidth:false});
+    });
+</script>

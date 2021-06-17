@@ -1,0 +1,10 @@
+{{! The menus which show up on the navbar}}
+<li><a href="/all">All Stories</a></li>
+{{#if username}}
+    <li><a href="/user/{{username}}">Your Profile</a></li>
+    <li><a href="/stories">Your Stories</a></li>
+    <li><a href="/settings">Settings</a></li>
+    <li><a href="/logout">Logout</a></li>
+{{else}}
+    <li><a href="/login">Login / Register</a></li>
+{{/if}}

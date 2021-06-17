@@ -94,3 +94,25 @@ table tr th:nth-child(4) {
     color:gray;
     margin-right:1rem;
 }
+
+/* Use media rules to selectively switch between a horizontal menu, and a dropdown menu for bigger and smaller screens respectively. */
+@media only screen and (max-width: 800px) {
+    #noDropdown {
+        display: none;
+    }
+}
+@media only screen and (min-width: 801px) {
+    #dropdownTrigger {
+        display: none;
+    }
+}
+
+/* Elements which can't be selected */
+.noSelect {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -khtml-user-select: none;
+    -ms-user-select: none;
+}
