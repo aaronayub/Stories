@@ -47,10 +47,32 @@
 
 <div class="section">
     <center><h5>Delete Account</h5></center>
+    <div class="bspacing">
+        You may delete your account here. If you do so, all of your stories and all of your comments will be removed. Your name will also be available for any other users to register with.
+    </div>
+    <a class="btn red modal-trigger" href="#delete">Delete Account</a>
+</div>
+
+<div id="delete" class="modal">
     <form method="post" action="/settings/delete">
-        <div class="bspacing">
-            You may delete your account here. If you do so, all of your stories and all of your comments will be removed. Your name will also be available for any other users to register with.
+        <div class="modal-content">
+            <h6>Delete Account</h6>
+            <p>Are you sure you want to delete your account? If so, then please enter your password below, and press "Delete Account".</p>
+            <p>If you pressed this by mistake, you may press "Cancel" to avoid deleting your account.</p>
+            <div class="input-field">
+                <label for="deletePass">Enter Password: </label>
+                <input id="deletePass" name="deletePass" required type="password">
+            </div>
         </div>
-        <button class="btn red">Delete Account</button>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close btn light-green">Cancel</a>
+            <button class="btn red">Delete Account</button>
+        </div>
     </form>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.modal');
+    var instances = M.Modal.init(elems);
+    });
+</script>

@@ -83,6 +83,27 @@ router.post('/password',async(req,res)=>{
     return
 })
 router.post('/delete',async(req,res)=>{
+    if (!req.session.username || !req.body.deletePass) {
+        req.session.output = "You must provide a password to delete your account."
+        res.redirect('/settings')
+        return
+    }
+
+    let givenPass: string | null = null
+    let passMatches: boolean = false
+    let [rows] = await con.promise().query('SELECT pass FROM users WHERE username = ?',
+    [req.session.username])
+    if (rows[0]) {
+        givenPass = rows[0].pass
+    }
+    if (givenPass) passMatches = await bcrypt.compare(req.body.deletePass,givenPass)
+    if (!passMatches) {
+        req.session.output = "Your password was entered incorrectly."
+        res.redirect('/settings')
+        return
+    }
+
+    // If the user provided the correct information, delete the account.
     con.query("DELETE FROM users WHERE username=?",
     [req.session.username])
     res.clearCookie('token')
