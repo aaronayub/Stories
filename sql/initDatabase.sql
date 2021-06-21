@@ -67,3 +67,16 @@ CREATE TABLE storyComments (
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
+
+/* All stories that users have favourited*/
+CREATE TABLE favs (
+    id INT UNSIGNED NOT NULL,
+    username VARCHAR(40) NOT NULL,
+    PRIMARY KEY (id, username),
+    FOREIGN KEY (username) REFERENCES users (username)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    FOREIGN KEY (id) REFERENCES stories (id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);

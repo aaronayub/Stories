@@ -17,13 +17,19 @@
 <div class="divider"></div>
 {{#if username}} {{! Users can rate stories only if logged in. }}
     Rate this story:
-    <span class="rating" id="rate1" onclick="rateStory({{story.id}},1)">&#9734;</span>
-    <span class="rating" id="rate2" onclick="rateStory({{story.id}},2)">&#9734;</span>
-    <span class="rating" id="rate3" onclick="rateStory({{story.id}},3)">&#9734;</span>
-    <span class="rating" id="rate4" onclick="rateStory({{story.id}},4)">&#9734;</span>
-    <span class="rating" id="rate5" onclick="rateStory({{story.id}},5)">&#9734;</span>
+    <span class="rating noSelect" id="rate1" onclick="rateStory({{story.id}},1)">&#9734;</span>
+    <span class="rating noSelect" id="rate2" onclick="rateStory({{story.id}},2)">&#9734;</span>
+    <span class="rating noSelect" id="rate3" onclick="rateStory({{story.id}},3)">&#9734;</span>
+    <span class="rating noSelect" id="rate4" onclick="rateStory({{story.id}},4)">&#9734;</span>
+    <span class="rating noSelect" id="rate5" onclick="rateStory({{story.id}},5)">&#9734;</span>
     <div>Current Rating: <span id="currentRating">{{story.rating}}</span></div>
     <script>showUserRating({{story.yourRating}});</script>
+
+    {{#if story.fav}}
+        <i class="material-icons noSelect favorite">favorite</i>
+    {{else}}
+        <i class="material-icons noSelect">favorite-border</i>
+    {{/if}}
 
     <div class="section">
         <form method="post" action="/read/{{story.id}}/comment">

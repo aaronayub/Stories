@@ -9,7 +9,8 @@ interface Story {
     rating: number,
     created: string,
     cover?: boolean,
-    yourRating?: number
+    yourRating?: number,
+    fav?: boolean
 }
 
 export default Story

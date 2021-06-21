@@ -10,8 +10,8 @@ router.get('/:id([0-9]{1,})',async (req,res)=>{
     let comments: Comment[] = []
     let title: string = "Story Not Found!"
     let exists: boolean = false // Set to true if this story exists
-    let [rows] = await con.promise().query("SELECT * FROM stories WHERE id = ?",
-    [req.params.id])
+    let [rows] = await con.promise().query("SELECT stories.*, COUNT(favs.username) AS favTrue FROM stories LEFT JOIN favs ON (stories.id = favs.id AND favs.username=?) WHERE stories.id = ?",
+    [req.session.username,req.params.id])
     if (rows[0]) {
         story = {
             id: rows[0].id,
@@ -21,7 +21,8 @@ router.get('/:id([0-9]{1,})',async (req,res)=>{
             username: rows[0].username,
             rating: rows[0].rating,
             created: rows[0].created.toLocaleDateString(),
-            cover: false
+            cover: false,
+            fav: rows[0].favTrue
         }
         let imagePath: string = __dirname+"/../public/covers/"+story.id
         if (fs.existsSync(imagePath)) {

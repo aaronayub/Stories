@@ -116,3 +116,8 @@ table tr th:nth-child(4) {
     -khtml-user-select: none;
     -ms-user-select: none;
 }
+
+/* Make the favorite icon red. */
+.favorite {
+    color:red;
+}
