@@ -118,6 +118,31 @@ router.post('/:id([0-9]{1,})/comment',async(req,res)=>{
     
     res.redirect('/read/'+req.params.id)
 })
+router.post('/:id([0-9]{1,})/favourite/',async(req,res)=>{
+    // Send "Bad Request" code if the user tries to favourite something without being logged in
+    if (!req.session.username) {
+        res.status(400).send('You are not logged in!')
+        return
+    }
+    // If the user is adding the story to their favourites
+    if (req.body.add == 'true') {
+        try {
+            await con.promise().query("INSERT INTO favs (id,username) VALUES (?,?)",
+            [req.params.id,req.session.username])
+            res.status(200).send(true)
+        }
+        catch (err) {
+            console.log(err)
+            res.status(400).send('Invalid request!')
+        }
+    }
+    // If the user is removing the story from their favourites
+    else if (req.body.add == 'false') {
+        await con.promise().query("DELETE FROM favs WHERE id=? AND username=?",
+        [req.params.id,req.session.username])
+        res.status(200).send(false)
+    }
+})
 router.get('/:id([0-9]{1,})/delete/:cid([0-9]{1,})',async(req,res)=>{
     if (!req.session.username) {
         req.session.output = "You must be logged in to delete comments."

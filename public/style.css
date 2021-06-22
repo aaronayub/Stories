@@ -96,12 +96,12 @@ table tr th:nth-child(4) {
 }
 
 /* Use media rules to selectively switch between a horizontal menu, and a dropdown menu for bigger and smaller screens respectively. */
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 900px) {
     #noDropdown {
         display: none;
     }
 }
-@media only screen and (min-width: 801px) {
+@media only screen and (min-width: 901px) {
     #dropdownTrigger {
         display: none;
     }
@@ -118,6 +118,6 @@ table tr th:nth-child(4) {
 }
 
 /* Make the favorite icon red. */
-.favorite {
+.favourite {
     color:red;
 }

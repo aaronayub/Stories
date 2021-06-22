@@ -25,10 +25,11 @@
     <div>Current Rating: <span id="currentRating">{{story.rating}}</span></div>
     <script>showUserRating({{story.yourRating}});</script>
 
+    Favourite:
     {{#if story.fav}}
-        <i class="material-icons noSelect favorite">favorite</i>
+        <i id="fav" onclick="postFavourite({{story.id}},false)" class="material-icons noSelect favourite">favorite</i>
     {{else}}
-        <i class="material-icons noSelect">favorite-border</i>
+        <i id="fav" onclick="postFavourite({{story.id}},true)" class="material-icons noSelect">favorite_border</i>
     {{/if}}
 
     <div class="section">
