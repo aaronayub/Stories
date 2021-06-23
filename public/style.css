@@ -40,8 +40,11 @@ td {
     overflow-wrap:break-word;
 }
 
-/* Minimize the width of the rating column */
+/* Minimize the width of the rating and favourites columns */
 table tr th:nth-child(4) {
+    width:7ch;
+}
+table tr th:nth-child(5) {
     width:7ch;
 }
 

@@ -1,0 +1,19 @@
+{{! A tabular view of stories}}
+<table class="striped highlight">
+    <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Brief</th>
+        <th>Rating</th>
+        <th>Favourites</th>
+    </tr>
+    {{#each stories}}
+        <tr>
+            <td><a href="/read/{{this.id}}">{{this.title}}</a></td>
+            <td><a href="/user/{{this.username}}">{{this.username}}</a></td>
+            <td>{{this.brief}}</td>
+            <td>{{this.rating}}</td>
+            <td>{{this.favCount}}</td>
+        </tr>
+    {{/each}}
+</table>

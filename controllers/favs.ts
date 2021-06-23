@@ -8,11 +8,12 @@ router.get('/',async (req,res)=>{
     if (!req.session.username) {
         req.session.output = "You need to be logged in to view this page."
         res.redirect('/')
+        return
     }
 
     let stories: Story[] = []
-    const results : any = await con.promise().query("SELECT stories.* FROM stories JOIN favs ON (stories.id=favs.id AND favs.username = ?)",
-    [req.session.username])
+    const results : any = await con.promise().query("SELECT stories.*, COUNT (favs.id=stories.id) as favCount FROM stories LEFT JOIN favs ON (stories.id=favs.id) WHERE EXISTS (SELECT * FROM favs WHERE favs.username=? and favs.id=stories.id) GROUP BY stories.id",
+    [req.session.username,req.session.username])
     results[0].forEach((row: any)=>{
         let story = {
             id: row.id,
@@ -21,7 +22,8 @@ router.get('/',async (req,res)=>{
             content: row.content,
             username: row.username,
             rating: row.rating,
-            created: row.created.toLocaleDateString()
+            created: row.created.toLocaleDateString(),
+            favCount: row.favCount
         }
         stories.push(story)
     })

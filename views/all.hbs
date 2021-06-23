@@ -3,21 +3,6 @@
     {{#unless stories}}
     <center><h5>No stories have been uploaded yet!</h5></center>
     {{else}}
-    <table class="striped highlight">
-        <tr>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Brief</th>
-            <th>Rating</th>
-        </tr>
-        {{#each stories}}
-            <tr>
-                <td><a href="/read/{{this.id}}">{{this.title}}</a></td>
-                <td><a href="/user/{{this.username}}">{{this.username}}</a></td>
-                <td>{{this.brief}}</td>
-                <td>{{this.rating}}</td>
-            </tr>
-        {{/each}}
-    </table>
+    {{>storiesTable stories=stories}}
     {{/unless}}
 </div>
