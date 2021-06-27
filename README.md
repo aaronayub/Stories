@@ -14,6 +14,6 @@ This webapp allows users to write and display stories to publically. Other users
 ## Running the program
 This website relies on a MySQL or MariaDB to host a database entitled "storiesApp". To test this out, SQL must be running, with a username and password entered for an SQL user with permission to create, select, and insert to databases, or at least the database entitled "storiesApp.
 
-To initialize the database, you can simply run "npm run initDatabase". Ensure that the parameters in "sql/config.json" point to a user who has permissions to create the database.
+To initialize the database, you can simply run "npm run initDatabase". If you don't want the sample users and stories in your database, then run this with the command line argument "noSamples", which gives you a completely empty database. Ensure that the parameters in "sql/config.json" point to a user who has permissions to create the database.
 
 To run the program, modify the connection parameters in the index.ts file to use the proper host, username, and password. Make sure the PHP server is running, and then you can run "npm start" in the root directory. You can then visit the website at port 3000.
