@@ -2,10 +2,11 @@
   "name": "stories",
   "version": "1.0.0",
   "description": "An express app for users to create, read, and rate stories.",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "start": "nodemon index.ts",
     "server": "node index.ts",
+    "initDatabase": "ts-node initDatabase.ts",
     "build": "tsc --project ./",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

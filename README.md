@@ -9,6 +9,7 @@ This webapp allows users to write and display stories to publically. Other users
 - Stories can also have book covers, which are shown inside story cards.
 - You may change your password or author biography by viewing the settings page. You can also delete your account there.
 - If you are logged in while reading a story, you can rate by clicking on the stars below the story. You can also leave comments for the story if you wish.
+- Below the rating options is the favouriting option. You can favourite a story by clicking the icon. Any of your favourites will show up on the "Your Favourites" page.
 
 ## Running the program
 This website relies on a MySQL or MariaDB to host a database entitled "storiesApp". To test this out, SQL must be running, with a username and password entered for an SQL user with permission to create, select, and insert to databases, or at least the database entitled "storiesApp.

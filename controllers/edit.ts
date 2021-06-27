@@ -4,7 +4,6 @@ import con from './sql'
 import multer from 'multer'
 import fs from 'fs'
 import Story from '../interfaces/story'
-import { nextTick } from 'process'
 var router = express.Router()
 const coversPath = "./public/covers/"
 var upload = multer({dest: coversPath})
