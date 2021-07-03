@@ -10,7 +10,7 @@ import { exit } from 'process';
 
 /* Initialize the database and all its tables from the sql file */
 async function init() {
-    execSync('mariadb -u ' + config.user + " --password=" + config.password + ' -e "source sql/initDatabase.sql"');
+    execSync('mysql -u ' + config.user + " --password=" + config.password + ' -e "source sql/initDatabase.sql"');
     console.log("Initialized database!")
 }
 

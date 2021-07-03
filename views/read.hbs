@@ -22,6 +22,7 @@
     <span class="rating noSelect" id="rate3" onclick="rateStory({{story.id}},3)">&#9734;</span>
     <span class="rating noSelect" id="rate4" onclick="rateStory({{story.id}},4)">&#9734;</span>
     <span class="rating noSelect" id="rate5" onclick="rateStory({{story.id}},5)">&#9734;</span>
+    <i id="removeRating" class="material-icons noSelect" onclick="rateStory({{story.id}},0)">backspace</i>
     <div>Current Rating: <span id="currentRating">{{story.rating}}</span></div>
     <script>showUserRating({{story.yourRating}});</script>
 

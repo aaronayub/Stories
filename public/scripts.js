@@ -11,6 +11,9 @@ function showUserRating(rating) {
             star.classList.remove('rateOn')
         }
     }
+    if (!rating) {
+        document.getElementById('removeRating').style.display='none'
+    }
 }
 
 /* Sends a request to the server to rate the story */
@@ -20,6 +23,15 @@ function rateStory(id,rating) {
         if (this.readyState == 4 && this.status == 200) {
             showUserRating(rating); // Update the rating displayed to the user
             document.getElementById("currentRating").innerHTML = this.responseText
+
+            // Show/Hide the "remove rating" button
+            let removeButton = document.getElementById('removeRating')
+            if (rating == 0) {
+                removeButton.style.display='none'
+            }
+            else {
+                removeButton.style.display='inline'
+            }
         }
     }
     xhr.open("POST", "/read/"+id+"/"+rating, true)

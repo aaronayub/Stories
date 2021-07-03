@@ -84,10 +84,16 @@ router.post('/:id([0-9]{1,})/:rating([0-5])', async (req,res) =>{
     // Wrap a successful request in a try catch in case someone tries to crash the server with an invalid request.
     // This puts less load on the database server, compared to searching for if the story exists with each request.
     try {
-        await con.promise().query("REPLACE INTO ratings (id,username,rating) VALUES (?,?,?)",
-        [req.params.id,req.session.username,req.params.rating])
+        if (req.params.rating == "0") {
+            await con.promise().query("DELETE FROM ratings WHERE id=? AND username = ?",
+            [req.params.id,req.session.username])
+        }
+        else {
+            await con.promise().query("REPLACE INTO ratings (id,username,rating) VALUES (?,?,?)",
+            [req.params.id,req.session.username,req.params.rating])
+        }
 
-        let [rows] = await con.promise().query("SELECT AVG(rating) as avg FROM ratings WHERE id=?",
+        let [rows] = await con.promise().query("SELECT IFNULL(AVG(rating),0) as avg FROM ratings WHERE id=?",
         [req.params.id])
         let average = rows[0].avg
         con.query("UPDATE stories SET rating = ? WHERE id = ?",
