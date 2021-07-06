@@ -12,8 +12,8 @@ This webapp allows users to write and display stories to publically. Other users
 - Below the rating options is the favouriting option. You can favourite a story by clicking the icon. Any of your favourites will show up on the "Your Favourites" page.
 
 ## Running the program
-This website relies on a MySQL or MariaDB to host a database entitled "storiesApp". To test this out, SQL must be running, with a username and password entered for an SQL user with permission to create, select, and insert to databases, or at least the database entitled "storiesApp.
+This website relies on a MySQL or MariaDB to host a database entitled "storiesApp". To test this out, SQL must be running, with a username and password entered for an SQL user with permission to create, select, and insert to databases, or at least the database entitled "storiesApp. Ensure that the parameters in "sql/config.json" point to a user who has permissions to create the database.
 
-To initialize the database, you can simply run "npm run initDatabase". If you don't want the sample users and stories in your database, then run this with the command line argument "noSamples", which gives you a completely empty database. Ensure that the parameters in "sql/config.json" point to a user who has permissions to create the database.
+To initialize the database, you can simply run "npm run initDatabase". If you don't want the sample users and stories in your database, then run this with the command line argument "noSamples", which gives you a completely empty database. If you wish to also create an administrator user who can delete other users, stories, or comments, then run the initDatabase script with the parameter "admin". This will create an admin with login credentials specified in the "sql/adminConfig.json" file.
 
 To run the program, modify the connection parameters in the index.ts file to use the proper host, username, and password. Make sure the PHP server is running, and then you can run "npm start" in the root directory. You can then visit the website at port 3000.

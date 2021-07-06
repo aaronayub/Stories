@@ -3,6 +3,7 @@ and additionally provides some sample data to show the website's
 functionality more quickly. */
 
 import config from './sql/config.json'
+import adminConfig from './sql/adminConfig.json'
 import con from './controllers/sql'
 import { execSync } from 'child_process'
 import bcrypt from 'bcrypt'
@@ -34,12 +35,20 @@ async function addStories() {
 async function main() {
     await init() // Initialize the database
     
-    // If the user entered the noSamples argument, do not add sample data
-    if (process.argv[2] == "noSamples") exit(0)
+    // Populate the database with sample data, unless the user specifies not to.
+    if (!process.argv.includes("noSamples")) {
+        await addUsers()
+        await addStories()
+    }
     
-    // Otherwise, populate the database with sample data
-    await addUsers()
-    await addStories()
+    // Create an admin account with data from adminconfig.json if the user specifies
+    if (process.argv.includes("admin")) {
+        let hash = await bcrypt.hash(adminConfig.password,10)
+        await con.promise().query("INSERT INTO users (username,pass,account) VALUES (?,?,?)",
+        [adminConfig.user,hash,"admin"])
+        console.log("Created admin with the username " + adminConfig.user + "!")
+    }
+
     exit(0)
 }
 
