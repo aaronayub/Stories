@@ -58,7 +58,7 @@ router.post('/:id([0-9]{1,})', upload.single('cover'), async (req,res)=>{
     if (rows[0]) {
        username = rows[0].username
     }
-    if (req.session.username != username) {
+    if (req.session.username != username && req.session.account != "admin") {
         req.session.output = "You do not have permission to edit this story."
         res.redirect('/')
         return

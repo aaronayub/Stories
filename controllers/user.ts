@@ -38,6 +38,10 @@ router.get('/:name',async (req,res)=>{
             stories.push(story)
         })
     }
+
+    // Allow admins to delete stories from this page
+    let canDelete: boolean = req.session.account == "admin"
+
     res.render('user',{
         title: title,
         bio: bio,
@@ -45,11 +49,30 @@ router.get('/:name',async (req,res)=>{
         username: req.session.username,
         output: req.session.output,
         success: req.session.success,
-        stories: stories
+        stories: stories,
+        canDelete: canDelete
     })
 
     delete req.session.output
     delete req.session.success
+})
+router.post('/:name/delete',async (req,res)=>{
+    if (!req.session.username || req.session.account != "admin") {
+        req.session.output = "You do not have permissions to perform this operation."
+        res.redirect('/')
+        return
+    }
+
+    // Allow an admin to delete their own account, but log them out if this is done.
+    if (req.session.username == req.params.name) {
+        delete req.session.account
+        delete req.session.username
+    }
+    con.promise().query("DELETE FROM users WHERE username=?",
+    [req.params.name])
+    req.session.output = "User deleted."
+    req.session.success = true
+    res.redirect('/')
 })
 
 export default router

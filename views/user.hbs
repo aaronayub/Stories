@@ -20,6 +20,29 @@
         <h4>{{title}} has not uploaded any stories yet.</h4>
     </center>
 {{/if}}
+{{#if canDelete}}
+<div>
+    <a class="btn red modal-trigger" href="#delete">Delete User</a>
+</div>
+
+<div id="delete" class="modal">
+    <div class="modal-content">
+        <p>Are you sure you want to delete this user?</p>
+    </div>
+    <div class="modal-footer">
+        <form method="post" action="/user/{{title}}/delete">
+            <a href="#!" class="btn light-green modal-close">Cancel</a>
+            <button type="submit" value="delete" name="delete" class="btn red">Delete User</button>
+        </form>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded',function() {
+        var elems = document.querySelectorAll('.modal');
+        var instances = M.Modal.init(elems);
+    });
+</script>
+{{/if}}
 
 {{else}}
 <div class="section">

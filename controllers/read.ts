@@ -52,11 +52,14 @@ router.get('/:id([0-9]{1,})',async (req,res)=>{
                 id: row.id,
                 rating: row.rating,
                 cid: row.cid,
-                delete: (req.session.username == row.username)
+                delete: (req.session.account == "admin" || req.session.username == row.username)
             }
             comments.push(comment)
         })
     }
+
+    // Allow admins to delete stories from this page
+    let canDelete: boolean = req.session.account == "admin"
 
     res.render('read',{
         title: title,
@@ -64,7 +67,8 @@ router.get('/:id([0-9]{1,})',async (req,res)=>{
         output: req.session.output,
         success: req.session.success,
         story: story,
-        comments: comments
+        comments: comments,
+        canDelete: canDelete
     })
     delete req.session.output
     delete req.session.success
@@ -155,8 +159,14 @@ router.get('/:id([0-9]{1,})/delete/:cid([0-9]{1,})',async(req,res)=>{
         return;
     }
     try { 
-        await con.promise().query("DELETE FROM storyComments WHERE cid=? AND username=?",
+        if (req.session.account != "admin") {
+            await con.promise().query("DELETE FROM storyComments WHERE cid=? AND username=?",
         [req.params.cid,req.session.username]) // Prevent users from deleting another user's comments with the username
+        }
+        else {
+            await con.promise().query("DELETE FROM storyComments WHERE cid=?",
+            [req.params.cid]) // Admins can delete any comments
+        }
     }
     catch (err) {
         req.session.output = "You can't delete another user's comments."

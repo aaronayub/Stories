@@ -41,6 +41,14 @@
     </div>
 {{/if}}
 
+{{! Admins can delete stories right from the read page. }}
+{{#if canDelete}}
+<div>
+    <a class="btn red modal-trigger" href="#delete">Delete Story</a>
+</div>
+{{>deleteStory story=story}}
+{{/if}}
+
 {{#if comments}}
 <div class="section comments">
     {{#each comments}}
@@ -54,6 +62,7 @@
         This story has no comments. <a href="/login">Log in</a> to leave one!
     {{/if}}
 {{/if}}
+
 {{else}}
 <div class="section">
     <center>

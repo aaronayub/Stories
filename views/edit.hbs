@@ -38,20 +38,4 @@
         </div>
     </form>
 </div>
-<div id="delete" class="modal">
-    <div class="modal-content">
-        <p>Are you sure you want to delete this story?</p>
-    </div>
-    <div class="modal-footer">
-        <form method="post" action="/edit/{{story.id}}">
-            <a href="#!" class="btn light-green modal-close">Cancel</a>
-            <button type="submit" value="delete" name="delete" class="btn red">Delete Story</button>
-        </form>
-    </div>
-</div>
-<script>
-    document.addEventListener('DOMContentLoaded',function() {
-        var elems = document.querySelectorAll('.modal');
-        var instances = M.Modal.init(elems);
-    });
-</script>
+{{>deleteStory story=story}}

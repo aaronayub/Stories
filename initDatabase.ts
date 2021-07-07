@@ -29,6 +29,8 @@ async function addStories() {
 
     await con.promise().query("INSERT INTO stories (title, brief, content, username) VALUES (?,?,?,?)",
     ["Lorem Ipsum Text","Placeholder text, now in story form!",story,"testuser1"])
+    await con.promise().query("INSERT INTO storyComments (id,username,comment) VALUES (?,?,?)",
+    [1,"testuser2","What a well written and perfectly understandable story!"])
     console.log("Added stories to database!")
 }
 

@@ -16,12 +16,13 @@ router.get('/',(req,res)=>{
 router.post('/',async(req,res)=>{
     let givenPass: string | null = null
     let passMatches: boolean = false
-    let [rows] = await con.promise().query('SELECT pass FROM users WHERE username = ?',
+    let [rows] = await con.promise().query('SELECT pass,account FROM users WHERE username = ?',
     [req.body.username])
     if (rows[0]) givenPass = rows[0].pass
     if (givenPass) passMatches = await bcrypt.compare(req.body.password,givenPass)
     if (passMatches) { // Credentials match, so the user logs in
         req.session.username = req.body.username
+        req.session.account = rows[0].account
 
         if (req.body.remember) { // If the user wants to be remembered across sessions
             let token: string = crypto.randomBytes(64).toString('hex')

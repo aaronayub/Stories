@@ -42,6 +42,7 @@ router.use('/',home)
 // All the other, common or short routes are defined here
 router.get('/logout',(req,res)=>{
     delete req.session.username
+    delete req.session.account
     if (req.cookies.token) {
         res.clearCookie('token')
         con.query('DELETE FROM logins WHERE token = ?',[req.cookies.token])

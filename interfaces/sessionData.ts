@@ -2,6 +2,7 @@
 declare module 'express-session' {
     interface SessionData {
         username: string | null,
+        account: string | null,
         output: string,
         success: boolean
     }
